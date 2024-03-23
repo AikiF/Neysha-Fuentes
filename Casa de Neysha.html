@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Gradient Fill 2</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #FFB6C2; /* Rosa para el fondo fuera del canvas */
+            margin: 0; /* Asegura que no haya margen alrededor del cuerpo */
+            padding: 0; /* Asegura que no haya relleno alrededor del cuerpo */
+        }
+    </style>
+</head>  
+<body>
+
+<canvas id="canvas" width="400" height="400"></canvas>
+    <script>
+    window.onload = function () {
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d'),
+          squareSize = 140, // Tamaño del cuadrado
+          rectX = (canvas.width - squareSize) / 2, // Centrar el cuadrado horizontalmente
+          rectY = 180, // Mover el cuadrado más hacia abajo
+          triangleX = rectX + squareSize / 2, // Posición X del triángulo (centro del cuadrado)
+          triangleY = rectY - 122, // Mover el triángulo más arriba
+          triangleBase = 200, // Longitud de la base del triángulo
+          triangleHeight = 120, // Altura del triángulo
+          doorWidth = 40, // Ancho de la puerta
+          doorHeight = 60, // Altura de la puerta
+          windowWidth = 25, // Ancho de la ventana
+          windowHeight = 25, // Altura de la ventana
+          windowY = rectY + 40, // Posición Y de las ventanas (arriba de la puerta)
+          windowOffset = 10, // Offset para mover las ventanas hacia los lados
+          starCenterX = 350, // Posición X de la estrella
+          starCenterY = 100, // Posición Y de la estrella
+          starOuterRadius = 50, // Radio exterior de la estrella
+          starInnerRadius = 25, // Radio interior de la estrella
+          starPoints = 5, // Número de puntas de la estrella
+          starAngle = Math.PI / starPoints; // Ángulo de la estrella
+
+      // Dibuja la casa
+
+      // Gradiente para el cuadrado
+      var squareGradient = context.createLinearGradient(rectX, rectY, rectX + squareSize, rectY + squareSize);
+      squareGradient.addColorStop(0, "#993399"); // Morado claro
+      squareGradient.addColorStop(1, "#660066"); // Morado oscuro
+
+      // Rellenar el cuadrado con el gradiente
+      context.fillStyle = squareGradient;
+      context.fillRect(rectX, rectY, squareSize, squareSize);
+
+      // Triángulo rosa (arriba del cuadrado)
+      context.beginPath();
+      context.moveTo(triangleX - triangleBase / 2, triangleY + triangleHeight);
+      context.lineTo(triangleX, triangleY);
+      context.lineTo(triangleX + triangleBase / 2, triangleY + triangleHeight);
+      context.closePath();
+
+      // Rellenar el triángulo con color rosa
+      context.fillStyle = "#993399"; // Morado claro
+      context.fill();
+
+      // Aumentar el ancho de la puerta
+var doorWidthExtended = 46; // Ancho extendido de la puerta
+
+// Dibujar la puerta
+var doorX = rectX + (squareSize - doorWidthExtended) / 2 + 26; // Ajustar la posición de la puerta
+var doorY = rectY + squareSize - doorHeight; // Colocar la puerta en la parte inferior del cuadrado
+context.fillStyle = "#82298"; // Morado oscuro para la puerta
+context.fillRect(doorX, doorY, doorWidthExtended, doorHeight);
+
+
+      // Dibujar ventanas
+var windowX = rectX + 30 - windowOffset; // Posición X de la ventana izquierda
+var windowHeightLeft = 40; // Alto aumentado de la ventana izquierda
+var windowWidthLeft = 40; // Ancho aumentado de la ventana izquierda
+context.fillStyle = "#dab136"; // Amarillo para la ventana
+
+// Ventana izquierda
+context.fillRect(windowX, windowY, windowWidthLeft, windowHeightLeft);
+
+// Mover la estrella un poco hacia la izquierda
+var starCenterX = 340; // Nueva posición X de la estrella
+
+var starCenterX = 350, // Posición X de la estrella
+    starCenterY = 100, // Posición Y de la estrella
+    starOuterRadius = 30, // Radio exterior de la estrella
+    starInnerRadius = 15, // Radio interior de la estrella
+    starPoints = 8; // Número de puntas de la estrella
+
+    var starCenterX = 330, // Nueva posición X de la estrella
+    starCenterY = 100, // Posición Y de la estrella
+    starOuterRadius = 30, // Radio exterior de la estrella
+    starInnerRadius = 15, // Radio interior de la estrella
+    starPoints = 8; // Número de puntas de la estrella
+
+// Dibuja la estrella
+context.beginPath();
+for (var i = 0; i < starPoints * 2; i++) {
+    var angle = (i * Math.PI) / starPoints - Math.PI / 2;
+    var radius = i % 2 === 0 ? starOuterRadius : starInnerRadius;
+    var x = starCenterX + radius * Math.cos(angle);
+    var y = starCenterY + radius * Math.sin(angle);
+    if (i === 0) {
+        context.moveTo(x, y);
+    } else {
+        context.lineTo(x, y);
+    }
+}
+context.closePath();
+
+// Gradiente para la estrella
+var starGradient = context.createRadialGradient(
+    starCenterX, starCenterY, 0,
+    starCenterX, starCenterY, starOuterRadius
+);
+starGradient.addColorStop(0, "#FFD700"); // Amarillo claro
+starGradient.addColorStop(0.5, "#FFCC00"); // Amarillo medio
+starGradient.addColorStop(1, "#FFA500"); // Amarillo oscuro
+
+// Rellena la estrella con el nuevo gradiente
+context.fillStyle = starGradient;
+context.fill();
+
+
+// Mover el círculo hacia la derecha y luego hacia arriba
+var circleX = rectX - 56; // Nueva posición X del círculo
+var circleY = rectY - 100; // Nueva posición Y del círculo
+var circleRadius = 30; // Radio del círculo
+context.fillStyle = "#FFD700"; // Amarillo para el círculo
+context.beginPath();
+context.arc(circleX, circleY, circleRadius, 0, 2 * Math.PI);
+context.closePath();
+context.fill();
+
+// Dibujar un círculo blanco para cubrir el círculo amarillo
+var circleXWhite = circleX + 15; // Mover ligeramente hacia la derecha
+var circleYWhite = circleY; // Mantener la misma posición en Y
+var circleRadiusWhite = circleRadius; // Mismo radio que el círculo amarillo
+context.fillStyle = "#362580"; // Blanco para el círculo
+context.beginPath();
+context.arc(circleXWhite, circleYWhite, circleRadiusWhite, 0, 2 * Math.PI);
+context.closePath();
+context.fill();
+
+// Dibujar el tallo del hongo (gris claro)
+var mushroomStemX = rectX - 20; // Posición X del tallo
+var mushroomStemY = rectY + squareSize + 10; // Posición Y del tallo, movido hacia arriba
+var mushroomStemWidth = 10; // Ancho del tallo
+var mushroomStemHeight = 50; // Altura del tallo
+context.fillStyle = "#D3D3D3"; // Gris claro para el tallo
+context.fillRect(mushroomStemX, mushroomStemY, mushroomStemWidth, mushroomStemHeight);
+
+// Dibujar la parte superior del hongo (morado)
+var mushroomTopX = mushroomStemX - 10; // Posición X de la parte superior
+var mushroomTopY = mushroomStemY - 40; // Posición Y de la parte superior, movido hacia arriba
+var mushroomTopRadius = 20; // Radio de la parte superior
+var mushroomTopStartAngle = Math.PI; // Ángulo inicial del arco
+var mushroomTopEndAngle = Math.PI * 2; // Ángulo final del arco
+context.fillStyle = "#993399"; // Morado para la parte superior
+context.beginPath();
+context.arc(mushroomTopX, mushroomTopY, mushroomTopRadius, mushroomTopStartAngle, mushroomTopEndAngle);
+context.closePath();
+context.fill();
+
+// Dibujar el tallo del hongo (gris claro)
+var mushroomStemX = rectX - 13; // Posición X del tallo
+var mushroomStemY = rectY + squareSize + 5; // Posición Y del tallo, movido hacia arriba
+var mushroomStemWidth = 26; // Ancho del tallo
+var mushroomStemHeight = 30; // Altura del tallo
+context.fillStyle = "#D3D3D3"; // Gris claro para el tallo
+context.fillRect(mushroomStemX, mushroomStemY, mushroomStemWidth, mushroomStemHeight);
+
+// Agregar otro rectángulo encima del semicírculo morado (volteado 90 grados)
+var rectangleX = mushroomTopX - 11; // Posición X del rectángulo
+var rectangleY = mushroomTopY + 2; // Posición Y del rectángulo, movido hacia arriba
+var rectangleWidth = 20; // Ancho del rectángulo (antes largo)
+var rectangleHeight = 40; // Altura del rectángulo (antes ancho)
+context.fillStyle = "#D3D3D3"; // Gris claro para el rectángulo
+context.fillRect(rectangleX, rectangleY, rectangleWidth, rectangleHeight);
+
+// Agregar otro rectángulo encima del semicírculo morado (volteado 90 grados)
+var rectangleX = mushroomTopX + 215; // Posición X del rectángulo
+var rectangleY = mushroomTopY + 2; // Posición Y del rectángulo, movido hacia arriba
+var rectangleWidth = 8; // Ancho del rectángulo (antes largo)
+var rectangleHeight = 40; // Altura del rectángulo (antes ancho)
+context.fillStyle = "#236E2B"; // Gris claro para el rectángulo
+context.fillRect(rectangleX, rectangleY, rectangleWidth, rectangleHeight);
+
+// Dibujar una flor pequeña al lado derecho de la casa
+var flowerX = rectX + squareSize + 50; // Posición X de la flor
+var flowerY = rectY + squareSize - 30; // Posición Y de la flor
+var flowerSize = 6; // Tamaño más pequeño de la flor
+var numPetals = 12; // Doble de pétalos
+
+context.fillStyle = "#FF1493"; // Color rosa para la flor
+context.beginPath();
+context.arc(flowerX, flowerY, flowerSize, 0, Math.PI * 2);
+context.fill();
+
+// Dibujar pétalos de la flor
+var petalLength = 10; // Longitud de los pétalos más corta
+var petalWidth = 6; // Grosor de los pétalos duplicado
+var petalAngle = (Math.PI * 2) / numPetals; // Ángulo entre pétalos
+context.fillStyle = "#FFB6C1"; // Color rosa claro para los nuevos pétalos
+context.lineWidth = petalWidth; // Grosor de línea
+context.strokeStyle = "#FFB6C1"; // Color del trazo
+for (var i = 0; i < numPetals; i++) {
+    var angle = i * petalAngle;
+    var x1 = flowerX + Math.cos(angle) * flowerSize;
+    var y1 = flowerY + Math.sin(angle) * flowerSize;
+    var x2 = flowerX + Math.cos(angle) * (flowerSize + petalLength); // Modificado
+    var y2 = flowerY + Math.sin(angle) * (flowerSize + petalLength); // Modificado
+    var x3 = flowerX + Math.cos(angle + petalAngle / 2) * (flowerSize + petalLength); // Modificado
+    var y3 = flowerY + Math.sin(angle + petalAngle / 2) * (flowerSize + petalLength); // Modificado
+
+    context.beginPath();
+    context.moveTo(x1, y1);
+    context.quadraticCurveTo(x2, y2, x3, y3); // Curva cuadrática en lugar de línea recta
+    context.stroke(); // Dibujar el trazo
+    context.closePath();
+}
+
+
+
+
+
+      // Dibujar el piso gigante
+      context.fillStyle = "#1E5020"; // Verde oscuro para el piso
+      context.fillRect(0, rectY + squareSize, canvas.width, canvas.height - (rectY + squareSize));
+
+      canvas.style.backgroundColor = "#362580"; // Azul oscuro
+    };
+    </script>
+  </body>
+</html>
